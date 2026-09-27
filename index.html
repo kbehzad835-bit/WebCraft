@@ -1,280 +1,1400 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>WebCraft — سایت‌ساز آنلاین</title>
 
-  <title>DilCraft Web</title>
-
-  <link rel="stylesheet" href="style.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+ --bg:#070910;--panel:#0e1320;--panel2:#131a29;--line:#242d42;
+ --text:#f5f7ff;--muted:#8992a7;--primary:#7657ff;--primary2:#9b7cff;
+}
+body{font-family:Arial,Tahoma,sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:0}
+.app{height:100vh;display:grid;grid-template-rows:64px 1fr}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:#090c14;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;min-width:180px}
+.logo{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,var(--primary),var(--primary2));font-weight:900;font-size:20px}
+.brand b{font-size:18px}.brand small{display:block;color:#687188;font-size:10px}
+.top-actions{display:flex;align-items:center;gap:8px}
+.btn{padding:9px 13px;border-radius:9px;background:#171e2d;color:#dfe4f2;border:1px solid #273149}
+.btn:hover{background:#222b40}
+.btn.primary{background:linear-gradient(135deg,var(--primary),var(--primary2));border:0;color:#fff}
+.btn.danger{color:#ff899e;background:#301923}
+.workspace{display:grid;grid-template-columns:235px 1fr 260px;min-height:0}
+.sidebar{background:var(--panel);border-left:1px solid var(--line);border-right:1px solid var(--line);overflow:auto;padding:15px}
+.left{border-right:0;border-left:1px solid var(--line)}
+.panel-title{font-size:13px;color:#aeb6c8;margin:5px 2px 12px}
+.tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tool{padding:14px 8px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);color:#e8ebf4}
+.tool:hover{border-color:#6851d2;transform:translateY(-1px)}
+.tool span{display:block;font-size:22px;margin-bottom:5px}.tool small{color:#8992a7}
+.divider{height:1px;background:var(--line);margin:18px 0}
+.page-list{display:flex;flex-direction:column;gap:7px}
+.page{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:9px;background:#131a29;color:#aeb6c8;cursor:pointer}
+.page.active{background:#30265e;color:#fff;border:1px solid #5847a6}
+.page button{background:transparent;color:#778197}
+.add-page{width:100%;margin-top:8px}
+.center{min-width:0;display:grid;grid-template-rows:48px 1fr;background:#080b12}
+.editorbar{display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#0d121d;border-bottom:1px solid var(--line);color:#8992a7;font-size:12px}
+.device{display:flex;gap:5px}
+.device button{padding:6px 9px;background:#171e2d;color:#9aa3b7;border-radius:7px}
+.device button.active{background:#332866;color:#fff}
+.canvas-wrap{overflow:auto;padding:35px;background:#06080e}
+.canvas{margin:auto;width:100%;max-width:1100px;min-height:calc(100vh - 150px);background:#fff;color:#111;border-radius:6px;box-shadow:0 20px 60px #0008;transition:.2s}
+.canvas.mobile{max-width:390px}
+.canvas.tablet{max-width:768px}
+.canvas.desktop{max-width:1100px}
+.site-element{position:relative;padding:14px;margin:3px;border:2px solid transparent;border-radius:7px;cursor:move}
+.site-element:hover{border-color:#8c75ff}
+.site-element.selected{border-color:#7657ff;outline:3px solid #7657ff22}
+.site-element.dragging{opacity:.45}
+.site-element img{max-width:100%;display:block;border-radius:10px}
+.site-element h1,.site-element h2,.site-element h3,.site-element p{outline:none}
+.site-btn{display:inline-block;padding:12px 22px;border-radius:9px;background:#7657ff;color:#fff;text-decoration:none}
+.section{min-height:160px;padding:30px;border:2px dashed #aab2c2;border-radius:12px;background:#f8f9fc}
+.hero-block{padding:70px 30px;text-align:center;background:linear-gradient(135deg,#111827,#31265e);color:#fff;border-radius:0}
+.empty{min-height:600px;display:grid;place-items:center;text-align:center;color:#8a93a5;padding:30px}
+.empty div{max-width:420px}.empty strong{display:block;font-size:26px;color:#555;margin-bottom:8px}
+.properties label{display:block;color:#8992a7;font-size:12px;margin:14px 0 6px}
+.properties input,.properties select,.properties textarea{width:100%;padding:9px;border-radius:8px;border:1px solid var(--line);background:#151c2a;color:#fff}
+.properties input[type=color]{height:40px;padding:3px}
+.help{margin-top:18px;padding:12px;background:#151c2a;border-radius:9px;color:#778197;font-size:11px;line-height:1.7}
+.toast{position:fixed;bottom:20px;left:20px;padding:12px 17px;background:#171e2d;border:1px solid #35415c;border-radius:10px;opacity:0;pointer-events:none;transition:.25s;z-index:9999}
+.toast.show{opacity:1}
+.modal-bg{position:fixed;inset:0;background:#000a;display:none;place-items:center;z-index:9998;padding:20px}
+.modal{width:min(700px,100%);max-height:90vh;overflow:auto;background:#101522;border:1px solid var(--line);border-radius:15px;padding:20px}
+.modal h2{margin-bottom:15px}
+.codebox{width:100%;min-height:400px;background:#070a10;color:#dce2f1;border:1px solid var(--line);border-radius:9px;padding:15px;direction:ltr;text-align:left;font-family:monospace;font-size:12px}
+@media(max-width:900px){
+ .workspace{grid-template-columns:190px 1fr}
+ .right{display:none}
+}
+@media(max-width:650px){
+ .workspace{grid-template-columns:1fr}
+ .left{display:none}
+ .topbar{padding:0 9px}.top-actions .optional{display:none}
+ .brand{min-width:auto}.brand small{display:none}
+}
+</style>
 </head>
 
 <body>
 
-<header class="topbar">
+<div class="app">
 
-  <div class="logo">
-    DilCraft <span>Web</span>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">W</div>
+    <div><b>WebCraft</b><small>Website Builder</small></div>
   </div>
 
-  <nav>
-    <a href="#home">خانه</a>
-    <a href="#features">امکانات</a>
-    <a href="#builder">سایت‌ساز</a>
-  </nav>
-
-  <button class="header-btn" onclick="openBuilder()">
-    شروع ساخت
-  </button>
-
+  <div class="top-actions">
+    <button class="btn optional" onclick="undo()">↶</button>
+    <button class="btn optional" onclick="redo()">↷</button>
+    <button class="btn optional" onclick="save()">💾 ذخیره</button>
+    <button class="btn optional" onclick="preview()">👁 پیش‌نمایش</button>
+    <button class="btn primary" onclick="exportHTML()">🚀 خروجی سایت</button>
+  </div>
 </header>
 
+<div class="workspace">
 
-<section id="home" class="hero">
+<aside class="sidebar left">
 
-  <div class="hero-content">
+  <div class="panel-title">المان‌ها</div>
 
-    <div class="badge">
-      ⚡ رایگان • سریع • بدون کدنویسی
-    </div>
+  <div class="tool-grid">
 
-    <h1>
-      سایت خودت رو
-      <span>همین امروز بساز</span>
-    </h1>
+    <button class="tool" onclick="add('heading')">
+      <span>🔠</span><small>عنوان</small>
+    </button>
 
-    <p>
-      با DilCraft Web بدون نیاز به برنامه‌نویسی
-      سایت حرفه‌ای خودت رو طراحی کن.
-    </p>
+    <button class="tool" onclick="add('text')">
+      <span>📝</span><small>متن</small>
+    </button>
 
-    <button class="hero-btn" onclick="openBuilder()">
-      🚀 ساخت سایت رایگان
+    <button class="tool" onclick="add('button')">
+      <span>🔘</span><small>دکمه</small>
+    </button>
+
+    <button class="tool" onclick="add('image')">
+      <span>🖼️</span><small>تصویر</small>
+    </button>
+
+    <button class="tool" onclick="add('section')">
+      <span>📦</span><small>بخش</small>
+    </button>
+
+    <button class="tool" onclick="add('hero')">
+      <span>✨</span><small>Hero</small>
     </button>
 
   </div>
 
-</section>
+  <div class="divider"></div>
+
+  <div class="panel-title">صفحه‌ها</div>
+
+  <div id="pages" class="page-list"></div>
+
+  <button class="btn add-page" onclick="newPage()">＋ صفحه جدید</button>
+
+  <div class="divider"></div>
+
+  <button class="btn" style="width:100%" onclick="importProject()">📂 وارد کردن</button>
+
+  <input id="importFile" type="file" accept=".json" hidden onchange="readImport(event)">
+
+</aside>
 
 
-<section id="features" class="features">
+<main class="center">
 
-  <h2>چرا DilCraft Web؟</h2>
+  <div class="editorbar">
 
-  <div class="feature-grid">
+    <span id="pageName">صفحه اصلی</span>
 
-    <div class="feature-card">
-      <div class="icon">🎨</div>
-      <h3>طراحی آزاد</h3>
-      <p>رنگ، متن و ظاهر سایتت رو خودت تنظیم کن.</p>
+    <div class="device">
+      <button id="desktopBtn" class="active" onclick="device('desktop')">🖥️</button>
+      <button id="tabletBtn" onclick="device('tablet')">▣</button>
+      <button id="mobileBtn" onclick="device('mobile')">📱</button>
     </div>
 
-    <div class="feature-card">
-      <div class="icon">🧩</div>
-      <h3>ساخت آسان</h3>
-      <p>بدون نیاز به دانش برنامه‌نویسی شروع کن.</p>
-    </div>
+    <span>WebCraft Editor</span>
 
-    <div class="feature-card">
-      <div class="icon">📱</div>
-      <h3>مناسب موبایل</h3>
-      <p>سایتت روی موبایل و کامپیوتر نمایش داده میشه.</p>
-    </div>
+  </div>
 
-    <div class="feature-card">
-      <div class="icon">⚡</div>
-      <h3>سریع</h3>
-      <p>پروژه‌ات رو سریع طراحی و پیش‌نمایش کن.</p>
+  <div class="canvas-wrap">
+    <div id="canvas" class="canvas desktop"></div>
+  </div>
+
+</main>
+
+
+<aside class="sidebar right">
+
+  <div class="panel-title">تنظیمات عنصر</div>
+
+  <div id="properties" class="properties">
+
+    <div class="help">
+      یک عنصر را انتخاب کن تا تنظیماتش اینجا نمایش داده شود.
+      <br><br>
+      برای جابه‌جایی، عنصر را بگیر و بکش.
     </div>
 
   </div>
 
-</section>
+  <div class="divider"></div>
 
+  <div class="panel-title">تنظیمات صفحه</div>
 
-<section id="builder" class="builder-section">
+  <div class="properties">
 
-  <div class="builder-title">
+    <label>رنگ پس‌زمینه</label>
+    <input id="pageBg" type="color" value="#ffffff" onchange="pageBackground(this.value)">
 
-    <span>🛠️</span>
-
-    <div>
-      <h2>سایت‌ساز DilCraft</h2>
-      <p>المان‌ها رو اضافه کن و سایتت رو بساز.</p>
-    </div>
+    <label>رنگ متن</label>
+    <input id="pageText" type="color" value="#111111" onchange="pageText(this.value)">
 
   </div>
 
+</aside>
 
-  <div class="builder">
-
-    <!-- ابزارها -->
-
-    <aside class="sidebar tools">
-
-      <h3>المان‌ها</h3>
-
-      <button onclick="addElement('text')">
-        📝 متن
-      </button>
-
-      <button onclick="addElement('heading')">
-        🔠 عنوان
-      </button>
-
-      <button onclick="addElement('button')">
-        🔘 دکمه
-      </button>
-
-      <button onclick="addElement('image')">
-        🖼️ تصویر
-      </button>
-
-      <button onclick="addElement('section')">
-        📦 بخش
-      </button>
-
-      <button onclick="saveProject()">
-        💾 ذخیره پروژه
-      </button>
-
-      <button onclick="previewSite()">
-        👁️ پیش‌نمایش
-      </button>
-
-      <button class="danger" onclick="clearCanvas()">
-        🗑️ پاک کردن
-      </button>
-
-    </aside>
+</div>
+</div>
 
 
-    <!-- صفحه سایت -->
+<div id="toast" class="toast"></div>
 
-    <main class="editor">
-
-      <div class="editor-top">
-
-        <span>
-          صفحه اصلی
-        </span>
-
-        <span class="live">
-          ● LIVE EDITOR
-        </span>
-
-      </div>
+<div id="modalBg" class="modal-bg">
+  <div class="modal">
+    <h2>کد سایت شما</h2>
+    <textarea id="codebox" class="codebox" readonly></textarea>
+    <br><br>
+    <button class="btn primary" onclick="downloadHTML()">⬇️ دانلود HTML</button>
+    <button class="btn" onclick="closeModal()">بستن</button>
+  </div>
+</div>
 
 
-      <div
-        id="canvas"
-        class="canvas"
-      >
+<script>
+/* =========================================================
+   WEBCRAFT
+   ========================================================= */
 
-        <div class="empty-state">
+const BRAND = "WebCraft";
+const STORAGE = "webcraft-project-v1";
 
-          <div class="empty-icon">
-            🚀
-          </div>
+let state = {
+  pages: [
+    {
+      id: crypto.randomUUID(),
+      name: "صفحه اصلی",
+      html: ""
+    }
+  ],
+  current: 0
+};
 
-          <h2>
-            سایتت رو اینجا بساز
-          </h2>
-
-          <p>
-            از پنل کناری یک المان اضافه کن.
-          </p>
-
-        </div>
-
-      </div>
-
-    </main>
+let history = [];
+let future = [];
+let selected = null;
 
 
-    <!-- تنظیمات -->
+/* ---------- شروع ---------- */
 
-    <aside class="sidebar settings">
+document.addEventListener("DOMContentLoaded", () => {
 
-      <h3>
-        ⚙️ تنظیمات
-      </h3>
+  load();
 
+  if (!state.pages[0].html) {
+    welcome();
+  }
 
-      <label>
-        رنگ پس‌زمینه
-      </label>
+  renderPages();
+  renderCanvas();
 
-      <input
-        id="bgColor"
-        type="color"
-        value="#111827"
-        onchange="changeBackground()"
-      >
+});
 
 
-      <label>
-        رنگ متن
-      </label>
+/* ---------- صفحه خوش آمد ---------- */
 
-      <input
-        id="textColor"
-        type="color"
-        value="#ffffff"
-        onchange="changeTextColor()"
-      >
+function welcome(){
 
+  const canvas = document.getElementById("canvas");
 
-      <label>
-        اندازه متن
-      </label>
-
-      <input
-        type="range"
-        min="12"
-        max="60"
-        value="18"
-        oninput="changeFontSize(this.value)"
-      >
-
-
-      <div class="setting-info">
-
-        <strong>
-          💡 نکته
-        </strong>
-
+  canvas.innerHTML = `
+    <div class="empty">
+      <div>
+        <strong>🚀 سایتت رو بساز</strong>
         <p>
-          روی متن‌ها کلیک کن و مستقیم تغییرشون بده.
+          از پنل سمت راست یا چپ یک المان انتخاب کن.
+          <br>
+          می‌تونی عناصر رو با Drag & Drop جابه‌جا کنی.
         </p>
-
       </div>
+    </div>
+  `;
 
-    </aside>
-
-  </div>
-
-</section>
+}
 
 
-<footer>
+/* ---------- ذخیره وضعیت ---------- */
 
-  <div class="footer-logo">
-    DilCraft Web
-  </div>
+function snapshot(){
 
-  <p>
-    سایت‌ساز رایگان برای همه 🚀
-  </p>
+  history.push(JSON.stringify(state));
+  if(history.length > 30) history.shift();
 
-  <small>
-    © 2026 DilCraft Web
-  </small>
+  future = [];
 
-</footer>
+}
 
 
-<script src="script.js"></script>
+/* ---------- ذخیره پروژه ---------- */
 
+function save(){
+
+  state.pages[state.current].html =
+    document.getElementById("canvas").innerHTML;
+
+  localStorage.setItem(
+    STORAGE,
+    JSON.stringify(state)
+  );
+
+  toast("پروژه ذخیره شد ✅");
+
+}
+
+
+/* ---------- بارگذاری ---------- */
+
+function load(){
+
+  const saved =
+    localStorage.getItem(STORAGE);
+
+  if(!saved) return;
+
+  try{
+
+    state = JSON.parse(saved);
+
+  }catch(e){
+
+    console.log("Load error",e);
+
+  }
+
+}
+
+
+/* ---------- نمایش صفحه‌ها ---------- */
+
+function renderPages(){
+
+  const box =
+    document.getElementById("pages");
+
+  box.innerHTML = "";
+
+  state.pages.forEach((page,index)=>{
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "page " +
+      (index === state.current ? "active" : "");
+
+    div.innerHTML = `
+      <span>${escapeHTML(page.name)}</span>
+      ${
+        state.pages.length > 1
+        ? `<button onclick="event.stopPropagation();deletePage(${index})">×</button>`
+        : ""
+      }
+    `;
+
+    div.onclick = () => switchPage(index);
+
+    box.appendChild(div);
+
+  });
+
+}
+
+
+/* ---------- تغییر صفحه ---------- */
+
+function switchPage(index){
+
+  save();
+
+  state.current = index;
+
+  selected = null;
+
+  renderPages();
+  renderCanvas();
+
+  document.getElementById("pageName").textContent =
+    state.pages[index].name;
+
+}
+
+
+/* ---------- صفحه جدید ---------- */
+
+function newPage(){
+
+  save();
+
+  const name =
+    prompt(
+      "نام صفحه:",
+      "صفحه جدید"
+    );
+
+  if(!name) return;
+
+  snapshot();
+
+  state.pages.push({
+    id: crypto.randomUUID(),
+    name:name,
+    html:""
+  });
+
+  state.current =
+    state.pages.length - 1;
+
+  renderPages();
+  renderCanvas();
+
+}
+
+
+/* ---------- حذف صفحه ---------- */
+
+function deletePage(index){
+
+  if(state.pages.length <= 1){
+
+    toast("حداقل یک صفحه باید وجود داشته باشد.");
+
+    return;
+
+  }
+
+  if(!confirm("این صفحه حذف شود؟")) return;
+
+  save();
+  snapshot();
+
+  state.pages.splice(index,1);
+
+  if(state.current >= state.pages.length){
+    state.current =
+      state.pages.length - 1;
+  }
+
+  renderPages();
+  renderCanvas();
+
+}
+
+
+/* ---------- نمایش Canvas ---------- */
+
+function renderCanvas(){
+
+  const canvas =
+    document.getElementById("canvas");
+
+  const html =
+    state.pages[state.current].html;
+
+  if(html){
+
+    canvas.innerHTML = html;
+
+  }else{
+
+    welcome();
+
+  }
+
+  document.getElementById("pageName").textContent =
+    state.pages[state.current].name;
+
+  bindElements();
+
+}
+
+
+/* ---------- افزودن عنصر ---------- */
+
+function add(type){
+
+  snapshot();
+
+  const canvas =
+    document.getElementById("canvas");
+
+  const element =
+    document.createElement("div");
+
+  element.className =
+    "site-element";
+
+  element.draggable = true;
+
+
+  if(type === "heading"){
+
+    element.innerHTML = `
+      <h1 contenteditable="true">
+        عنوان جذاب سایت
+      </h1>
+    `;
+
+  }
+
+
+  if(type === "text"){
+
+    element.innerHTML = `
+      <p contenteditable="true">
+        این یک متن نمونه است. روی متن کلیک کن و آن را تغییر بده.
+      </p>
+    `;
+
+  }
+
+
+  if(type === "button"){
+
+    element.innerHTML = `
+      <a
+        href="#"
+        class="site-btn"
+        onclick="return false"
+      >
+        دکمه من
+      </a>
+    `;
+
+  }
+
+
+  if(type === "image"){
+
+    const url =
+      prompt(
+        "لینک تصویر را وارد کن:"
+      );
+
+    if(!url) return;
+
+    element.innerHTML = `
+      <img src="${escapeHTML(url)}" alt="تصویر">
+    `;
+
+  }
+
+
+  if(type === "section"){
+
+    element.classList.add("section");
+
+    element.innerHTML = `
+      <h2 contenteditable="true">
+        بخش جدید
+      </h2>
+      <p contenteditable="true">
+        محتوای این بخش را اینجا بنویس.
+      </p>
+    `;
+
+  }
+
+
+  if(type === "hero"){
+
+    element.classList.add("hero-block");
+
+    element.innerHTML = `
+      <h1 contenteditable="true">
+        به سایت من خوش آمدید
+      </h1>
+      <p contenteditable="true">
+        این بخش Hero سایت من است.
+      </p>
+      <br>
+      <a class="site-btn" href="#" onclick="return false">
+        شروع کنید
+      </a>
+    `;
+
+  }
+
+
+  canvas.querySelector(".empty")?.remove();
+
+  canvas.appendChild(element);
+
+  selectElement(element);
+
+  bindElements();
+
+  save();
+
+}
+
+
+/* ---------- اتصال رویدادها ---------- */
+
+function bindElements(){
+
+  document
+    .querySelectorAll(".site-element")
+    .forEach(el=>{
+
+      el.onclick = e => {
+
+        e.stopPropagation();
+
+        selectElement(el);
+
+      };
+
+
+      el.ondragstart = e => {
+
+        selected = el;
+
+        el.classList.add("dragging");
+
+        e.dataTransfer.effectAllowed =
+          "move";
+
+      };
+
+
+      el.ondragend = () => {
+
+        el.classList.remove("dragging");
+
+      };
+
+
+      el.ondragover = e => {
+
+        e.preventDefault();
+
+      };
+
+
+      el.ondrop = e => {
+
+        e.preventDefault();
+
+        if(selected &&
+           selected !== el){
+
+          snapshot();
+
+          const rect =
+            el.getBoundingClientRect();
+
+          const before =
+            e.clientY <
+            rect.top +
+            rect.height / 2;
+
+          if(before){
+
+            el.parentNode
+              .insertBefore(
+                selected,
+                el
+              );
+
+          }else{
+
+            el.parentNode
+              .insertBefore(
+                selected,
+                el.nextSibling
+              );
+
+          }
+
+          save();
+
+        }
+
+      };
+
+    });
+
+
+  document
+    .querySelectorAll("[contenteditable=true]")
+    .forEach(el=>{
+
+      el.oninput = () => {
+
+        save();
+
+      };
+
+    });
+
+}
+
+
+/* ---------- انتخاب ---------- */
+
+function selectElement(el){
+
+  document
+    .querySelectorAll(".site-element")
+    .forEach(x=>
+      x.classList.remove("selected")
+    );
+
+  selected = el;
+
+  el.classList.add("selected");
+
+  showProperties(el);
+
+}
+
+
+/* ---------- تنظیمات عنصر ---------- */
+
+function showProperties(el){
+
+  const box =
+    document.getElementById("properties");
+
+  const text =
+    el.querySelector(
+      "h1,h2,h3,p"
+    );
+
+  const image =
+    el.querySelector("img");
+
+  const button =
+    el.querySelector(".site-btn");
+
+  box.innerHTML = `
+
+    ${
+      text
+      ? `
+        <label>اندازه متن</label>
+
+        <input
+          type="range"
+          min="12"
+          max="72"
+          value="${parseInt(getComputedStyle(text).fontSize)}"
+          oninput="editFont(this.value)"
+        >
+
+        <label>رنگ متن</label>
+
+        <input
+          type="color"
+          value="${rgbToHex(getComputedStyle(text).color)}"
+          onchange="editColor(this.value)"
+        >
+      `
+      : ""
+    }
+
+    ${
+      button
+      ? `
+        <label>متن دکمه</label>
+
+        <input
+          value="${escapeAttr(button.innerText)}"
+          oninput="editButtonText(this.value)"
+        >
+
+        <label>لینک دکمه</label>
+
+        <input
+          value="${escapeAttr(button.getAttribute("href") || "#")}"
+          oninput="editButtonLink(this.value)"
+        >
+      `
+      : ""
+    }
+
+    ${
+      image
+      ? `
+        <label>لینک تصویر</label>
+
+        <input
+          value="${escapeAttr(image.src)}"
+          oninput="editImage(this.value)"
+        >
+      `
+      : ""
+    }
+
+    <label>پس‌زمینه عنصر</label>
+
+    <input
+      type="color"
+      value="${rgbToHex(getComputedStyle(el).backgroundColor)}"
+      onchange="editBackground(this.value)"
+    >
+
+    <div class="divider"></div>
+
+    <button
+      class="btn danger"
+      style="width:100%"
+      onclick="removeSelected()"
+    >
+      🗑️ حذف عنصر
+    </button>
+
+  `;
+
+}
+
+
+/* ---------- تنظیمات ---------- */
+
+function editFont(size){
+
+  if(!selected) return;
+
+  const text =
+    selected.querySelector(
+      "h1,h2,h3,p"
+    );
+
+  if(text){
+
+    text.style.fontSize =
+      size + "px";
+
+    save();
+
+  }
+
+}
+
+
+function editColor(color){
+
+  if(!selected) return;
+
+  const text =
+    selected.querySelector(
+      "h1,h2,h3,p"
+    );
+
+  if(text){
+
+    text.style.color =
+      color;
+
+    save();
+
+  }
+
+}
+
+
+function editBackground(color){
+
+  if(!selected) return;
+
+  selected.style.background =
+    color;
+
+  save();
+
+}
+
+
+function editButtonText(value){
+
+  if(!selected) return;
+
+  const btn =
+    selected.querySelector(
+      ".site-btn"
+    );
+
+  if(btn){
+
+    btn.innerText =
+      value;
+
+    save();
+
+  }
+
+}
+
+
+function editButtonLink(value){
+
+  if(!selected) return;
+
+  const btn =
+    selected.querySelector(
+      ".site-btn"
+    );
+
+  if(btn){
+
+    btn.href =
+      value;
+
+    save();
+
+  }
+
+}
+
+
+function editImage(value){
+
+  if(!selected) return;
+
+  const img =
+    selected.querySelector("img");
+
+  if(img){
+
+    img.src =
+      value;
+
+    save();
+
+  }
+
+}
+
+
+/* ---------- حذف ---------- */
+
+function removeSelected(){
+
+  if(!selected) return;
+
+  snapshot();
+
+  selected.remove();
+
+  selected = null;
+
+  document.getElementById(
+    "properties"
+  ).innerHTML = `
+    <div class="help">
+      عنصر حذف شد.
+    </div>
+  `;
+
+  save();
+
+}
+
+
+/* ---------- رنگ صفحه ---------- */
+
+function pageBackground(color){
+
+  document
+    .getElementById("canvas")
+    .style.background =
+    color;
+
+  save();
+
+}
+
+
+function pageText(color){
+
+  document
+    .getElementById("canvas")
+    .style.color =
+    color;
+
+  save();
+
+}
+
+
+/* ---------- دستگاه ---------- */
+
+function device(type){
+
+  const canvas =
+    document.getElementById("canvas");
+
+  canvas.className =
+    "canvas " + type;
+
+  document
+    .querySelectorAll(".device button")
+    .forEach(b=>
+      b.classList.remove("active")
+    );
+
+  document
+    .getElementById(
+      type + "Btn"
+    )
+    .classList.add("active");
+
+}
+
+
+/* ---------- Undo ---------- */
+
+function undo(){
+
+  if(!history.length){
+
+    toast("چیزی برای برگشت وجود ندارد.");
+
+    return;
+
+  }
+
+  future.push(
+    JSON.stringify(state)
+  );
+
+  state =
+    JSON.parse(
+      history.pop()
+    );
+
+  renderPages();
+  renderCanvas();
+
+  toast("انجام شد ↶");
+
+}
+
+
+/* ---------- Redo ---------- */
+
+function redo(){
+
+  if(!future.length){
+
+    toast("چیزی برای جلو رفتن وجود ندارد.");
+
+    return;
+
+  }
+
+  history.push(
+    JSON.stringify(state)
+  );
+
+  state =
+    JSON.parse(
+      future.pop()
+    );
+
+  renderPages();
+  renderCanvas();
+
+  toast("انجام شد ↷");
+
+}
+
+
+/* ---------- پیش نمایش ---------- */
+
+function preview(){
+
+  save();
+
+  const page =
+    state.pages[state.current];
+
+  const win =
+    window.open(
+      "",
+      "_blank"
+    );
+
+  if(!win){
+
+    toast("پنجره جدید توسط مرورگر مسدود شد.");
+
+    return;
+
+  }
+
+  win.document.write(`
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${escapeHTML(page.name)} — ${BRAND}</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Tahoma,sans-serif;line-height:1.7}
+.site-element{position:relative;padding:14px;margin:3px;border:2px solid transparent;border-radius:7px}
+.site-element img{max-width:100%;display:block;border-radius:10px}
+.site-btn{display:inline-block;padding:12px 22px;border-radius:9px;background:#7657ff;color:white;text-decoration:none}
+.section{min-height:160px;padding:30px;border:2px dashed #aaa;border-radius:12px}
+.hero-block{padding:70px 30px;text-align:center;background:linear-gradient(135deg,#111827,#31265e);color:white}
+</style>
+</head>
+<body>
+${page.html}
 </body>
 </html>
+  `);
+
+  win.document.close();
+
+}
+
+
+/* ---------- خروجی ---------- */
+
+function exportHTML(){
+
+  save();
+
+  const page =
+    state.pages[state.current];
+
+  const code = `
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${escapeHTML(page.name)}</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Tahoma,sans-serif;line-height:1.7}
+.site-element{padding:14px;margin:3px;border:2px solid transparent}
+.site-element img{max-width:100%;display:block;border-radius:10px}
+.site-btn{display:inline-block;padding:12px 22px;border-radius:9px;background:#7657ff;color:#fff;text-decoration:none}
+.section{min-height:160px;padding:30px;border:2px dashed #aaa;border-radius:12px}
+.hero-block{padding:70px 30px;text-align:center;background:linear-gradient(135deg,#111827,#31265e);color:#fff}
+</style>
+</head>
+<body>
+${page.html}
+</body>
+</html>`;
+
+  document.getElementById(
+    "codebox"
+  ).value = code;
+
+  document.getElementById(
+    "modalBg"
+  ).style.display = "grid";
+
+}
+
+
+/* ---------- دانلود ---------- */
+
+function downloadHTML(){
+
+  const code =
+    document.getElementById(
+      "codebox"
+    ).value;
+
+  const blob =
+    new Blob(
+      [code],
+      {type:"text/html"}
+    );
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  a.href = url;
+
+  a.download =
+    "webcraft-site.html";
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+/* ---------- وارد کردن ---------- */
+
+function importProject(){
+
+  document
+    .getElementById("importFile")
+    .click();
+
+}
+
+
+function readImport(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file) return;
+
+  const reader =
+    new FileReader();
+
+  reader.onload = e => {
+
+    try{
+
+      state =
+        JSON.parse(e.target.result);
+
+      state.current = 0;
+
+      save();
+
+      renderPages();
+      renderCanvas();
+
+      toast("پروژه وارد شد ✅");
+
+    }catch{
+
+      toast("فایل پروژه معتبر نیست.");
+
+    }
+
+  };
+
+  reader.readAsText(file);
+
+}
+
+
+/* ---------- Toast ---------- */
+
+function toast(message){
+
+  const t =
+    document.getElementById(
+      "toast"
+    );
+
+  t.textContent =
+    message;
+
+  t.classList.add("show");
+
+  setTimeout(
+    () => t.classList.remove("show"),
+    2200
+  );
+
+}
+
+
+/* ---------- ابزار ---------- */
+
+function rgbToHex(rgb){
+
+  if(!rgb ||
+     rgb === "rgba(0, 0, 0, 0)")
+    return "#ffffff";
+
+  const result =
+    rgb.match(/\d+/g);
+
+  if(!result) return "#ffffff";
+
+  return "#" +
+    result
+      .slice(0,3)
+      .map(x=>
+        Number(x)
+          .toString(16)
+          .padStart(2,"0")
+      )
+      .join("");
+
+}
+
+
+function escapeHTML(text){
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    text ?? "";
+
+  return div.innerHTML;
+
+}
+
+
+function escapeAttr(text){
+
+  return escapeHTML(text)
+    .replace(/"/g,"&quot;");
+
+}
+
+
+/* ---------- کلیک بیرون ---------- */
+
+document
+  .getElementById("canvas")
+  .addEventListener(
+    "click",
+    e => {
+
+      if(e.target.id === "canvas"){
+
+        document
+          .querySelectorAll(".site-element")
+          .forEach(x=>
+            x.classList.remove("selected")
+          );
+
+        selected = null;
+
+      }
+
+    }
+  );
+
+
+/* ---------- میانبرها ---------- */
+
+document.addEventListener(
+  "keydown",
+  e => {
+
+    if(
+      (e.ctrlKey || e.metaKey) &&
+      e.key.toLowerCase() === "s"
+    ){
+
+      e.preventDefault();
+
+      save();
+
+    }
+
+
+    if(
+      (e.ctrlKey || e.metaKey) &&
+      e.key.toLowerCase() === "z"
+    ){
+
+      e.preventDefault();
+
+      undo();
+
+    }
+
+
+    if(
+      (e.ctrlKey || e.metaKey) &&
+      e.key.toLowerCase() === "y"
+    ){
+
+      e.preventDefault();
+
+      redo();
+
+    }
+
+
+    if(
+      e.key === "Delete" &&
+      selected &&
+      document.activeElement?.contentEditable !== "true"
+    ){
+
+      removeSelected();
+
+    }
+
+  }
+);
+</script>
+
+</body>
+  </html>
