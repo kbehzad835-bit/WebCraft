@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebCraft | سایت‌ساز رایگان</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <div class="logo">WebCraft</div>
+
+  <nav>
+    <a href="#home">خانه</a>
+    <a href="#features">امکانات</a>
+    <a href="#builder">سایت‌ساز</a>
+  </nav>
+
+  <button class="start-btn" onclick="scrollToBuilder()">
+    شروع ساخت
+  </button>
+</header>
+
+<section id="home" class="hero">
+  <div class="hero-content">
+    <span class="badge">100% رایگان برای شروع</span>
+
+    <h1>
+      سایت خودت رو
+      <span>بدون کدنویسی</span>
+      بساز
+    </h1>
+
+    <p>
+      با WebCraft در چند دقیقه سایت شخصی، گیمینگ،
+      فروشگاهی یا هر چیزی که دوست داری بساز.
+    </p>
+
+    <button class="main-btn" onclick="scrollToBuilder()">
+      🚀 ساخت سایت رایگان
+    </button>
+  </div>
+</section>
+
+<section id="features" class="features">
+
+  <h2>امکانات WebCraft</h2>
+
+  <div class="feature-grid">
+
+    <div class="feature">
+      <div>🧩</div>
+      <h3>ساخت آسان</h3>
+      <p>بدون نیاز به کدنویسی سایتت رو بساز.</p>
+    </div>
+
+    <div class="feature">
+      <div>🎨</div>
+      <h3>طراحی آزاد</h3>
+      <p>رنگ، متن، اندازه و ظاهر سایت رو تغییر بده.</p>
+    </div>
+
+    <div class="feature">
+      <div>⚡</div>
+      <h3>سریع</h3>
+      <p>سایتت رو سریع طراحی و پیش‌نمایش کن.</p>
+    </div>
+
+    <div class="feature">
+      <div>💾</div>
+      <h3>ذخیره پروژه</h3>
+      <p>پروژه‌ات داخل مرورگر ذخیره میشه.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<section id="builder" class="builder-section">
+
+  <h2>🛠️ سایت‌ساز</h2>
+
+  <div class="builder">
+
+    <aside class="tools">
+
+      <h3>ابزارها</h3>
+
+      <button onclick="addElement('text')">
+        ➕ متن
+      </button>
+
+      <button onclick="addElement('button')">
+        🔘 دکمه
+      </button>
+
+      <button onclick="addElement('image')">
+        🖼️ تصویر
+      </button>
+
+      <button onclick="addElement('box')">
+        📦 بخش
+      </button>
+
+      <button onclick="saveProject()">
+        💾 ذخیره
+      </button>
+
+      <button onclick="clearCanvas()">
+        🗑️ پاک کردن
+      </button>
+
+    </aside>
+
+    <main>
+
+      <div class="canvas-header">
+        <span>پیش‌نمایش سایت</span>
+
+        <button onclick="previewSite()">
+          👁️ پیش‌نمایش
+        </button>
+      </div>
+
+      <div id="canvas" class="canvas">
+
+        <div class="welcome">
+          <h2>سایت خودت رو اینجا بساز 🚀</h2>
+          <p>
+            از منوی سمت راست یک عنصر اضافه کن.
+          </p>
+        </div>
+
+      </div>
+
+    </main>
+
+    <aside class="settings">
+
+      <h3>تنظیمات</h3>
+
+      <label>رنگ پس‌زمینه</label>
+      <input
+        type="color"
+        id="bgColor"
+        value="#111827"
+        onchange="changeBackground()"
+      >
+
+      <label>رنگ متن</label>
+      <input
+        type="color"
+        id="textColor"
+        value="#ffffff"
+        onchange="changeTextColor()"
+      >
+
+      <label>اندازه متن</label>
+
+      <input
+        type="range"
+        min="12"
+        max="50"
+        value="20"
+        onchange="changeFontSize(this.value)"
+      >
+
+    </aside>
+
+  </div>
+
+</section>
+
+<footer>
+  <p>© 2026 WebCraft — سایت‌ساز رایگان</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
