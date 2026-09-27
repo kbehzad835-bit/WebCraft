@@ -1,307 +1,259 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+const canvas = document.getElementById("canvas");
+
+function scrollToBuilder() {
+  document.getElementById("builder").scrollIntoView({
+    behavior: "smooth"
+  });
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background: #080b14;
-  color: white;
+function removeWelcome() {
+  const welcome = document.querySelector(".welcome");
+
+  if (welcome) {
+    welcome.remove();
+  }
 }
 
-header {
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 7%;
-  background: rgba(10, 14, 25, .95);
-  border-bottom: 1px solid #20283a;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
+function createElement(type) {
 
-.logo {
-  font-size: 25px;
-  font-weight: bold;
-  color: #7c5cff;
-}
+  const element = document.createElement("div");
 
-nav {
-  display: flex;
-  gap: 30px;
-}
+  element.className = "element";
+  element.dataset.type = type;
 
-nav a {
-  color: #bbb;
-  text-decoration: none;
-}
+  if (type === "text") {
 
-nav a:hover {
-  color: white;
-}
+    element.innerHTML = `
+      <h2 contenteditable="true">
+        متن جدید
+      </h2>
+    `;
 
-button {
-  border: 0;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.start-btn,
-.main-btn {
-  background: #7c5cff;
-  color: white;
-  padding: 12px 22px;
-  border-radius: 10px;
-  font-weight: bold;
-}
-
-.hero {
-  min-height: 620px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 40px 20px;
-  background:
-    radial-gradient(circle at top, #28205e, transparent 45%),
-    #080b14;
-}
-
-.hero-content {
-  max-width: 800px;
-}
-
-.badge {
-  display: inline-block;
-  background: #17152d;
-  color: #a996ff;
-  border: 1px solid #423878;
-  padding: 8px 15px;
-  border-radius: 30px;
-  margin-bottom: 25px;
-}
-
-.hero h1 {
-  font-size: clamp(42px, 7vw, 80px);
-  line-height: 1.1;
-  margin-bottom: 25px;
-}
-
-.hero h1 span {
-  color: #8d75ff;
-}
-
-.hero p {
-  color: #aaa;
-  font-size: 18px;
-  line-height: 1.8;
-  margin-bottom: 35px;
-}
-
-.main-btn {
-  font-size: 18px;
-  padding: 16px 30px;
-}
-
-.features {
-  padding: 90px 7%;
-  text-align: center;
-}
-
-.features h2,
-.builder-section h2 {
-  font-size: 38px;
-  margin-bottom: 45px;
-}
-
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-
-.feature {
-  background: #111625;
-  border: 1px solid #222b40;
-  border-radius: 18px;
-  padding: 30px 20px;
-}
-
-.feature div {
-  font-size: 40px;
-  margin-bottom: 15px;
-}
-
-.feature h3 {
-  margin-bottom: 10px;
-}
-
-.feature p {
-  color: #999;
-  line-height: 1.7;
-}
-
-.builder-section {
-  padding: 80px 5%;
-  background: #0c101c;
-  text-align: center;
-}
-
-.builder {
-  max-width: 1400px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: 220px 1fr 220px;
-  gap: 15px;
-  text-align: right;
-}
-
-.tools,
-.settings {
-  background: #111625;
-  border: 1px solid #222b40;
-  border-radius: 15px;
-  padding: 18px;
-}
-
-.tools h3,
-.settings h3 {
-  margin-bottom: 20px;
-}
-
-.tools button {
-  display: block;
-  width: 100%;
-  background: #1a2132;
-  color: white;
-  padding: 13px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  text-align: right;
-}
-
-.tools button:hover {
-  background: #292f45;
-}
-
-main {
-  background: #080b14;
-  border: 1px solid #222b40;
-  border-radius: 15px;
-  overflow: hidden;
-}
-
-.canvas-header {
-  height: 55px;
-  background: #111625;
-  padding: 0 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.canvas-header button {
-  background: #7c5cff;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 7px;
-}
-
-.canvas {
-  min-height: 500px;
-  padding: 35px;
-  background: #111827;
-  color: white;
-  transition: .3s;
-}
-
-.welcome {
-  padding: 80px 20px;
-  text-align: center;
-  border: 2px dashed #38435c;
-  border-radius: 15px;
-}
-
-.element {
-  position: relative;
-  margin: 12px 0;
-  padding: 15px;
-  border: 1px dashed transparent;
-}
-
-.element:hover {
-  border-color: #7c5cff;
-}
-
-.element img {
-  max-width: 100%;
-  border-radius: 10px;
-}
-
-.site-button {
-  background: #7c5cff;
-  color: white;
-  padding: 12px 25px;
-  border-radius: 8px;
-}
-
-.box-element {
-  min-height: 120px;
-  border: 2px dashed #48536e;
-  border-radius: 12px;
-}
-
-.settings label {
-  display: block;
-  margin: 20px 0 8px;
-  color: #aaa;
-}
-
-.settings input {
-  width: 100%;
-}
-
-footer {
-  text-align: center;
-  padding: 35px;
-  color: #777;
-}
-
-@media (max-width: 900px) {
-
-  .feature-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 
-  .builder {
-    grid-template-columns: 1fr;
+  if (type === "button") {
+
+    element.innerHTML = `
+      <button class="site-button">
+        دکمه جدید
+      </button>
+    `;
+
   }
 
-  nav {
-    display: none;
+  if (type === "image") {
+
+    element.innerHTML = `
+      <div>
+        <p>لینک تصویر را وارد کن:</p>
+
+        <input
+          type="text"
+          placeholder="https://example.com/image.jpg"
+          onchange="setImage(this)"
+          style="
+            width:100%;
+            padding:10px;
+            margin-top:10px;
+            border-radius:7px;
+            border:0;
+          "
+        >
+      </div>
+    `;
+
   }
 
+  if (type === "box") {
+
+    element.classList.add("box-element");
+
+    element.innerHTML = `
+      <h3 contenteditable="true">
+        بخش جدید
+      </h3>
+      <p contenteditable="true">
+        اینجا محتوای خودت را بنویس.
+      </p>
+    `;
+
+  }
+
+  return element;
 }
 
-@media (max-width: 500px) {
+function addElement(type) {
 
-  .feature-grid {
-    grid-template-columns: 1fr;
+  removeWelcome();
+
+  const element = createElement(type);
+
+  canvas.appendChild(element);
+
+  element.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
+
+function setImage(input) {
+
+  const url = input.value.trim();
+
+  if (!url) return;
+
+  const parent = input.parentElement;
+
+  parent.innerHTML = `
+    <img src="${escapeHTML(url)}" alt="تصویر سایت">
+  `;
+}
+
+function changeBackground() {
+
+  const color = document.getElementById("bgColor").value;
+
+  canvas.style.background = color;
+}
+
+function changeTextColor() {
+
+  const color = document.getElementById("textColor").value;
+
+  canvas.style.color = color;
+}
+
+function changeFontSize(size) {
+
+  canvas.style.fontSize = size + "px";
+}
+
+function saveProject() {
+
+  localStorage.setItem(
+    "webcraft-project",
+    canvas.innerHTML
+  );
+
+  alert("پروژه با موفقیت ذخیره شد ✅");
+}
+
+function loadProject() {
+
+  const saved = localStorage.getItem(
+    "webcraft-project"
+  );
+
+  if (saved) {
+    canvas.innerHTML = saved;
+  }
+}
+
+function clearCanvas() {
+
+  if (
+    confirm("مطمئنی می‌خواهی پروژه پاک شود؟")
+  ) {
+
+    canvas.innerHTML = `
+      <div class="welcome">
+        <h2>سایت خودت رو اینجا بساز 🚀</h2>
+        <p>
+          از منوی سمت راست یک عنصر اضافه کن.
+        </p>
+      </div>
+    `;
+
+    localStorage.removeItem(
+      "webcraft-project"
+    );
+  }
+}
+
+function previewSite() {
+
+  const newWindow = window.open(
+    "",
+    "_blank"
+  );
+
+  if (!newWindow) {
+
+    alert(
+      "مرورگر اجازه باز کردن صفحه جدید را نداد."
+    );
+
+    return;
   }
 
-  header {
-    padding: 0 20px;
-  }
+  newWindow.document.write(`
+    <!DOCTYPE html>
 
-  .start-btn {
-    display: none;
-  }
+    <html lang="fa" dir="rtl">
 
-  .canvas {
-    padding: 15px;
-  }
+    <head>
 
-  }
+      <meta charset="UTF-8">
+
+      <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+      <title>سایت ساخته شده با WebCraft</title>
+
+      <style>
+
+        body {
+          margin: 0;
+          padding: 40px;
+          font-family: Arial, sans-serif;
+          background: #111827;
+          color: white;
+        }
+
+        .element {
+          margin: 15px 0;
+          padding: 15px;
+        }
+
+        img {
+          max-width: 100%;
+          border-radius: 10px;
+        }
+
+        button {
+          background: #7c5cff;
+          color: white;
+          border: 0;
+          padding: 12px 25px;
+          border-radius: 8px;
+        }
+
+      </style>
+
+    </head>
+
+    <body>
+
+      ${canvas.innerHTML}
+
+    </body>
+
+    </html>
+  `);
+
+  newWindow.document.close();
+}
+
+function escapeHTML(text) {
+
+  const div = document.createElement("div");
+
+  div.textContent = text;
+
+  return div.innerHTML;
+}
+
+window.addEventListener(
+  "load",
+  loadProject
+);
