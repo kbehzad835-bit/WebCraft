@@ -3,14 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebCraft | سایت‌ساز رایگان</title>
+
+  <title>DilCraft Web</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
-  <div class="logo">WebCraft</div>
+<header class="topbar">
+
+  <div class="logo">
+    DilCraft <span>Web</span>
+  </div>
 
   <nav>
     <a href="#home">خانه</a>
@@ -18,78 +23,103 @@
     <a href="#builder">سایت‌ساز</a>
   </nav>
 
-  <button class="start-btn" onclick="scrollToBuilder()">
+  <button class="header-btn" onclick="openBuilder()">
     شروع ساخت
   </button>
+
 </header>
 
+
 <section id="home" class="hero">
+
   <div class="hero-content">
-    <span class="badge">100% رایگان برای شروع</span>
+
+    <div class="badge">
+      ⚡ رایگان • سریع • بدون کدنویسی
+    </div>
 
     <h1>
       سایت خودت رو
-      <span>بدون کدنویسی</span>
-      بساز
+      <span>همین امروز بساز</span>
     </h1>
 
     <p>
-      با WebCraft در چند دقیقه سایت شخصی، گیمینگ،
-      فروشگاهی یا هر چیزی که دوست داری بساز.
+      با DilCraft Web بدون نیاز به برنامه‌نویسی
+      سایت حرفه‌ای خودت رو طراحی کن.
     </p>
 
-    <button class="main-btn" onclick="scrollToBuilder()">
+    <button class="hero-btn" onclick="openBuilder()">
       🚀 ساخت سایت رایگان
     </button>
+
   </div>
+
 </section>
+
 
 <section id="features" class="features">
 
-  <h2>امکانات WebCraft</h2>
+  <h2>چرا DilCraft Web؟</h2>
 
   <div class="feature-grid">
 
-    <div class="feature">
-      <div>🧩</div>
-      <h3>ساخت آسان</h3>
-      <p>بدون نیاز به کدنویسی سایتت رو بساز.</p>
-    </div>
-
-    <div class="feature">
-      <div>🎨</div>
+    <div class="feature-card">
+      <div class="icon">🎨</div>
       <h3>طراحی آزاد</h3>
-      <p>رنگ، متن، اندازه و ظاهر سایت رو تغییر بده.</p>
+      <p>رنگ، متن و ظاهر سایتت رو خودت تنظیم کن.</p>
     </div>
 
-    <div class="feature">
-      <div>⚡</div>
+    <div class="feature-card">
+      <div class="icon">🧩</div>
+      <h3>ساخت آسان</h3>
+      <p>بدون نیاز به دانش برنامه‌نویسی شروع کن.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="icon">📱</div>
+      <h3>مناسب موبایل</h3>
+      <p>سایتت روی موبایل و کامپیوتر نمایش داده میشه.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="icon">⚡</div>
       <h3>سریع</h3>
-      <p>سایتت رو سریع طراحی و پیش‌نمایش کن.</p>
-    </div>
-
-    <div class="feature">
-      <div>💾</div>
-      <h3>ذخیره پروژه</h3>
-      <p>پروژه‌ات داخل مرورگر ذخیره میشه.</p>
+      <p>پروژه‌ات رو سریع طراحی و پیش‌نمایش کن.</p>
     </div>
 
   </div>
 
 </section>
 
+
 <section id="builder" class="builder-section">
 
-  <h2>🛠️ سایت‌ساز</h2>
+  <div class="builder-title">
+
+    <span>🛠️</span>
+
+    <div>
+      <h2>سایت‌ساز DilCraft</h2>
+      <p>المان‌ها رو اضافه کن و سایتت رو بساز.</p>
+    </div>
+
+  </div>
+
 
   <div class="builder">
 
-    <aside class="tools">
+    <!-- ابزارها -->
 
-      <h3>ابزارها</h3>
+    <aside class="sidebar tools">
+
+      <h3>المان‌ها</h3>
 
       <button onclick="addElement('text')">
-        ➕ متن
+        📝 متن
+      </button>
+
+      <button onclick="addElement('heading')">
+        🔠 عنوان
       </button>
 
       <button onclick="addElement('button')">
@@ -100,72 +130,125 @@
         🖼️ تصویر
       </button>
 
-      <button onclick="addElement('box')">
+      <button onclick="addElement('section')">
         📦 بخش
       </button>
 
       <button onclick="saveProject()">
-        💾 ذخیره
+        💾 ذخیره پروژه
       </button>
 
-      <button onclick="clearCanvas()">
+      <button onclick="previewSite()">
+        👁️ پیش‌نمایش
+      </button>
+
+      <button class="danger" onclick="clearCanvas()">
         🗑️ پاک کردن
       </button>
 
     </aside>
 
-    <main>
 
-      <div class="canvas-header">
-        <span>پیش‌نمایش سایت</span>
+    <!-- صفحه سایت -->
 
-        <button onclick="previewSite()">
-          👁️ پیش‌نمایش
-        </button>
+    <main class="editor">
+
+      <div class="editor-top">
+
+        <span>
+          صفحه اصلی
+        </span>
+
+        <span class="live">
+          ● LIVE EDITOR
+        </span>
+
       </div>
 
-      <div id="canvas" class="canvas">
 
-        <div class="welcome">
-          <h2>سایت خودت رو اینجا بساز 🚀</h2>
+      <div
+        id="canvas"
+        class="canvas"
+      >
+
+        <div class="empty-state">
+
+          <div class="empty-icon">
+            🚀
+          </div>
+
+          <h2>
+            سایتت رو اینجا بساز
+          </h2>
+
           <p>
-            از منوی سمت راست یک عنصر اضافه کن.
+            از پنل کناری یک المان اضافه کن.
           </p>
+
         </div>
 
       </div>
 
     </main>
 
-    <aside class="settings">
 
-      <h3>تنظیمات</h3>
+    <!-- تنظیمات -->
 
-      <label>رنگ پس‌زمینه</label>
+    <aside class="sidebar settings">
+
+      <h3>
+        ⚙️ تنظیمات
+      </h3>
+
+
+      <label>
+        رنگ پس‌زمینه
+      </label>
+
       <input
-        type="color"
         id="bgColor"
+        type="color"
         value="#111827"
         onchange="changeBackground()"
       >
 
-      <label>رنگ متن</label>
+
+      <label>
+        رنگ متن
+      </label>
+
       <input
-        type="color"
         id="textColor"
+        type="color"
         value="#ffffff"
         onchange="changeTextColor()"
       >
 
-      <label>اندازه متن</label>
+
+      <label>
+        اندازه متن
+      </label>
 
       <input
         type="range"
         min="12"
-        max="50"
-        value="20"
-        onchange="changeFontSize(this.value)"
+        max="60"
+        value="18"
+        oninput="changeFontSize(this.value)"
       >
+
+
+      <div class="setting-info">
+
+        <strong>
+          💡 نکته
+        </strong>
+
+        <p>
+          روی متن‌ها کلیک کن و مستقیم تغییرشون بده.
+        </p>
+
+      </div>
 
     </aside>
 
@@ -173,9 +256,23 @@
 
 </section>
 
+
 <footer>
-  <p>© 2026 WebCraft — سایت‌ساز رایگان</p>
+
+  <div class="footer-logo">
+    DilCraft Web
+  </div>
+
+  <p>
+    سایت‌ساز رایگان برای همه 🚀
+  </p>
+
+  <small>
+    © 2026 DilCraft Web
+  </small>
+
 </footer>
+
 
 <script src="script.js"></script>
 
