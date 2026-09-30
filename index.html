@@ -3,399 +3,375 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WebCraft | سایت‌ساز رایگان</title>
+<title>WebCraft | سایت‌ساز حرفه‌ای</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box}
 body{
-font-family:Arial,sans-serif;
-background:#07070a;color:#fff;min-height:100vh
+margin:0;
+font-family:Arial,Tahoma,sans-serif;
+background:#07070a;
+color:#fff;
+min-height:100vh
 }
-button,input,textarea{font-family:inherit}
+button,input,textarea,select{font-family:inherit}
 button{cursor:pointer}
 
-header{
-height:70px;padding:0 6%;
-display:flex;align-items:center;justify-content:space-between;
-border-bottom:1px solid #20202a;
-background:#08080cdd;backdrop-filter:blur(15px);
-position:sticky;top:0;z-index:100
+.nav{
+height:70px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 7%;
+border-bottom:1px solid #222;
+background:#0b0b10;
+position:sticky;
+top:0;
+z-index:10
 }
-.logo{font-size:25px;font-weight:900;color:#8b6cff}
-nav{display:flex;gap:8px}
-nav button{
-background:none;border:0;color:#aaa;padding:10px 14px
+
+.logo{
+font-size:25px;
+font-weight:900;
+color:#7c5cff
 }
-nav button:hover{color:white}
+
+.nav-actions{display:flex;gap:10px}
 
 .btn{
-border:0;border-radius:11px;padding:12px 19px;
-font-weight:bold
+border:0;
+border-radius:12px;
+padding:12px 20px;
+font-weight:bold;
+font-size:14px
 }
-.primary{background:#7c5cff;color:white}
-.secondary{background:#17171f;color:#fff;border:1px solid #292934}
-.danger{background:#3a1519;color:#ff9ca5}
+
+.primary{
+background:#7c5cff;
+color:white
+}
+
+.secondary{
+background:#17171e;
+color:white;
+border:1px solid #292933
+}
 
 .hero{
-min-height:75vh;display:flex;align-items:center;
-justify-content:center;text-align:center;padding:70px 20px;
-background:radial-gradient(circle at 50% 15%,#38247555,transparent 42%)
+max-width:1100px;
+margin:auto;
+padding:90px 20px 50px;
+text-align:center
 }
-.hero-content{max-width:850px}
-.badge{
-display:inline-block;padding:8px 15px;border:1px solid #392d58;
-background:#15121e;color:#bcaaff;border-radius:30px;
-margin-bottom:25px;font-size:13px
-}
-h1{font-size:clamp(43px,8vw,82px);line-height:1;margin-bottom:25px}
-.gradient{
-background:linear-gradient(90deg,#8c6cff,#d17cff);
--webkit-background-clip:text;color:transparent
-}
-.hero p{color:#aaa;font-size:18px;line-height:1.9}
-.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:32px}
 
-.section{padding:70px 6%}
-.title{text-align:center;margin-bottom:40px}
-.title h2{font-size:38px;margin-bottom:10px}
-.title p{color:#888}
+.badge{
+display:inline-block;
+padding:8px 14px;
+border:1px solid #30275e;
+border-radius:30px;
+color:#a997ff;
+background:#11101c;
+margin-bottom:20px
+}
+
+.hero h1{
+font-size:clamp(42px,8vw,78px);
+margin:10px 0;
+line-height:1
+}
+
+.hero h1 span{color:#7c5cff}
+
+.hero p{
+color:#aaa;
+font-size:18px;
+max-width:650px;
+margin:20px auto 30px;
+line-height:2
+}
 
 .features{
-max-width:1100px;margin:auto;
-display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px
+max-width:1100px;
+margin:30px auto 80px;
+padding:20px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px
 }
-.card{
-background:#0e0e13;border:1px solid #22222c;
-border-radius:18px;padding:28px
-}
-.card:hover{border-color:#55468c;transform:translateY(-3px)}
-.card .icon{font-size:30px;margin-bottom:15px}
-.card p{color:#888;line-height:1.8;margin-top:10px}
 
-#dashboard{display:none}
-.dashboard{
-max-width:1100px;margin:auto;
-background:#0d0d12;border:1px solid #242430;
-border-radius:22px;padding:25px
+.card{
+background:#0e0e14;
+border:1px solid #22232d;
+border-radius:18px;
+padding:25px
 }
-.dashboard-head{
-display:flex;justify-content:space-between;
-align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:25px
+
+.card h3{margin-top:0}
+.card p{color:#999;line-height:1.8}
+
+.hidden{display:none!important}
+
+.panel{
+max-width:900px;
+margin:50px auto;
+padding:25px
 }
-.userbox{
-background:#15151c;border:1px solid #272733;
-padding:12px 16px;border-radius:12px;color:#bbb
+
+.box{
+background:#0e0e14;
+border:1px solid #24242e;
+border-radius:20px;
+padding:25px
+}
+
+input,textarea,select{
+width:100%;
+background:#09090d;
+border:1px solid #292936;
+color:#fff;
+border-radius:12px;
+padding:14px;
+outline:none;
+margin:8px 0 14px
+}
+
+textarea{min-height:160px;resize:vertical}
+
+input:focus,textarea:focus,select:focus{
+border-color:#7c5cff
+}
+
+.form-title{
+font-size:28px;
+margin-top:0
+}
+
+.message{
+padding:12px;
+border-radius:10px;
+margin:10px 0;
+background:#15151d;
+color:#ccc
 }
 
 .projects{
-display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-gap:15px;margin-top:20px
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+margin-top:20px
 }
+
 .project{
-background:#121219;border:1px solid #282832;
-border-radius:15px;padding:20px
-}
-.project h3{margin-bottom:8px}
-.project small{color:#777}
-.project-actions{display:flex;gap:8px;margin-top:15px}
-.project-actions button{flex:1}
-
-.builder{
-display:none;
-max-width:1100px;margin:auto;
-background:#0e0e13;border:1px solid #242430;
-border-radius:22px;padding:25px
-}
-.builder.active{display:block}
-.builder-grid{
-display:grid;grid-template-columns:230px 1fr;gap:15px
-}
-.sidebar,.preview{
-background:#09090d;border:1px solid #242430;
-border-radius:15px;padding:15px
-}
-.tool{
-width:100%;padding:12px;margin-bottom:9px;
-background:#15151c;border:1px solid #292934;
-color:white;border-radius:10px;text-align:right
-}
-.tool:hover{border-color:#7c5cff}
-.preview-box{
-min-height:430px;border:1px dashed #383842;
-border-radius:12px;padding:30px;
-display:flex;flex-direction:column;align-items:center;
-justify-content:center;gap:15px;text-align:center
+padding:20px;
+border:1px solid #292936;
+border-radius:15px;
+background:#0a0a0f
 }
 
-.modal{
-position:fixed;inset:0;background:#000b;
-display:none;align-items:center;justify-content:center;
-z-index:500;padding:20px
-}
-.modal.active{display:flex}
-.modal-box{
-width:100%;max-width:430px;
-background:#101016;border:1px solid #292934;
-border-radius:20px;padding:28px
-}
-.modal-box h2{text-align:center;margin-bottom:20px}
-.input{
-width:100%;padding:14px;margin-bottom:12px;
-background:#08080c;color:white;border:1px solid #292934;
-border-radius:10px;outline:none
-}
-.input:focus{border-color:#7c5cff}
-.modal-buttons{display:flex;gap:10px}
-.modal-buttons button{flex:1}
-.msg{text-align:center;color:#ff9ca5;margin-top:12px;min-height:20px}
-
-footer{
-border-top:1px solid #20202a;padding:30px;
-text-align:center;color:#666
+.editor{
+display:grid;
+grid-template-columns:280px 1fr;
+gap:18px
 }
 
-@media(max-width:700px){
-nav{display:none}
-.builder-grid{grid-template-columns:1fr}
-.dashboard-head{align-items:stretch}
+.sidebar{
+background:#0e0e14;
+border:1px solid #24242e;
+border-radius:18px;
+padding:20px
+}
+
+.preview{
+background:white;
+color:#111;
+border-radius:18px;
+min-height:500px;
+padding:30px;
+overflow:auto
+}
+
+.small{
+font-size:13px;
+color:#888
+}
+
+@media(max-width:750px){
+.features{grid-template-columns:1fr}
+.projects{grid-template-columns:1fr}
+.editor{grid-template-columns:1fr}
+.nav{padding:0 4%}
+.hero{padding-top:60px}
 }
 </style>
 </head>
 
 <body>
 
-<header>
+<header class="nav">
 <div class="logo">WebCraft</div>
 
-<nav>
-<button onclick="goHome()">خانه</button>
-<button onclick="showFeatures()">امکانات</button>
-<button onclick="openDashboard()">داشبورد</button>
-</nav>
-
-<div id="authButtons">
-<button class="btn primary" onclick="openAuth('login')">ورود</button>
-</div>
-
-<div id="userButtons" style="display:none">
-<button class="btn secondary" onclick="logout()">خروج</button>
+<div class="nav-actions">
+<button id="loginBtn" class="btn secondary" onclick="showAuth()">ورود</button>
+<button id="dashboardBtn" class="btn primary hidden" onclick="showDashboard()">داشبورد</button>
+<button id="logoutBtn" class="btn secondary hidden" onclick="logout()">خروج</button>
 </div>
 </header>
 
+<main>
 
-<section class="hero" id="home">
-
-<div class="hero-content">
-
-<div class="badge">✦ ساخت سایت رایگان</div>
+<section id="home">
+<div class="hero">
+<div class="badge">⚡ ساخت سایت بدون نیاز به کدنویسی</div>
 
 <h1>
-سایت خودت رو با
-<span class="gradient">WebCraft</span>
-بساز
+سایت خودت رو با <span>WebCraft</span> بساز
 </h1>
 
 <p>
-بدون نیاز به برنامه‌نویسی، سایت خودت را طراحی کن،
-پروژه‌هایت را ذخیره کن و آماده انتشارش کن.
+یک سایت حرفه‌ای بساز، پروژه‌هات رو ذخیره کن و همه‌چیز رو از یک داشبورد مدیریت کن.
 </p>
 
-<div class="actions">
-<button class="btn primary" onclick="startBuilding()">
-🚀 شروع ساخت سایت
+<button class="btn primary" onclick="showAuth()">
+شروع ساخت سایت 🚀
 </button>
-
-<button class="btn secondary" onclick="showFeatures()">
-مشاهده امکانات
-</button>
-</div>
-
-</div>
-</section>
-
-
-<section class="section" id="features">
-
-<div class="title">
-<h2>امکانات WebCraft</h2>
-<p>هدف ما ساخت یک سایت‌ساز ساده و قدرتمند برای همه است.</p>
 </div>
 
 <div class="features">
 
 <div class="card">
-<div class="icon">🎨</div>
-<h3>طراحی آسان</h3>
-<p>ساخت صفحات بدون نیاز به دانش حرفه‌ای برنامه‌نویسی.</p>
+<h3>🎨 طراحی آسان</h3>
+<p>ظاهر سایتت رو بدون دردسر بساز و تغییر بده.</p>
 </div>
 
 <div class="card">
-<div class="icon">⚡</div>
-<h3>سریع</h3>
-<p>پروژه خودت را بساز و تغییرات را سریع مشاهده کن.</p>
+<h3>💾 ذخیره پروژه</h3>
+<p>پروژه‌های خودت رو در حساب کاربری ذخیره کن.</p>
 </div>
 
 <div class="card">
-<div class="icon">📱</div>
-<h3>موبایل‌پسند</h3>
-<p>سایت‌هایی بساز که روی گوشی و کامپیوتر درست نمایش داده شوند.</p>
-</div>
-
-<div class="card">
-<div class="icon">☁️</div>
-<h3>ذخیره ابری</h3>
-<p>پروژه‌های خودت را در حساب WebCraft ذخیره کن.</p>
+<h3>⚡ سریع و رایگان</h3>
+<p>WebCraft برای شروع ساخت سایت به شکل ساده طراحی شده.</p>
 </div>
 
 </div>
 </section>
 
+<section id="auth" class="panel hidden">
 
-<section class="section" id="dashboard">
+<div class="box">
 
-<div class="dashboard">
+<h2 id="authTitle" class="form-title">ورود به WebCraft</h2>
 
-<div class="dashboard-head">
-<div>
-<h2>👋 داشبورد WebCraft</h2>
-<div class="userbox" id="userEmail">در حال بارگذاری...</div>
-</div>
+<input id="email" type="email" placeholder="ایمیل">
 
-<button class="btn primary" onclick="newProject()">
-＋ پروژه جدید
-</button>
-</div>
+<input id="password" type="password" placeholder="رمز عبور">
 
-<h3>پروژه‌های من</h3>
+<div id="authMessage" class="message hidden"></div>
 
-<div class="projects" id="projectsList">
-</div>
-
-</div>
-</section>
-
-
-<section class="section">
-
-<div class="builder" id="builder">
-
-<div class="dashboard-head">
-<h2>🛠️ سایت‌ساز</h2>
-
-<div>
-<button class="btn primary" onclick="saveProject()">
-💾 ذخیره پروژه
-</button>
-
-<button class="btn secondary" onclick="closeBuilder()">
-بستن
-</button>
-</div>
-</div>
-
-<div class="builder-grid">
-
-<div class="sidebar">
-
-<button class="tool" onclick="addTitle()">
-➕ عنوان
-</button>
-
-<button class="tool" onclick="addText()">
-➕ متن
-</button>
-
-<button class="tool" onclick="addButton()">
-➕ دکمه
-</button>
-
-<button class="tool" onclick="addImage()">
-➕ تصویر
-</button>
-
-<button class="tool" onclick="clearPreview()">
-🗑️ پاک کردن
-</button>
-
-</div>
-
-<div class="preview">
-
-<div class="preview-box" id="preview">
-
-<h1>سایت من</h1>
-
-<p>اینجا صفحه سایت شماست.</p>
-
-<button class="btn primary">
-شروع کنید
-</button>
-
-</div>
-
-</div>
-
-</div>
-</div>
-</section>
-
-
-<footer>
-© 2026 WebCraft — ساخت سایت برای همه
-</footer>
-
-
-<div class="modal" id="authModal">
-
-<div class="modal-box">
-
-<h2 id="authTitle">ورود به WebCraft</h2>
-
-<input
-id="email"
-class="input"
-type="email"
-placeholder="ایمیل"
->
-
-<input
-id="password"
-class="input"
-type="password"
-placeholder="رمز عبور"
->
-
-<div class="modal-buttons">
-
-<button class="btn primary" onclick="submitAuth()">
+<button class="btn primary" style="width:100%" onclick="submitAuth()">
 ادامه
 </button>
 
-<button class="btn secondary" onclick="closeAuth()">
-بستن
-</button>
+<br><br>
 
-</div>
-
-<div class="msg" id="authMsg"></div>
-
-<p style="text-align:center;margin-top:15px;color:#888">
-<span id="switchText">حساب نداری؟</span>
-<button
-style="background:none;border:0;color:#9a82ff"
-onclick="switchAuth()"
-id="switchButton">
+<button class="btn secondary" style="width:100%" onclick="toggleAuth()">
 ثبت‌نام
 </button>
-</p>
+
+<br><br>
+
+<button class="btn secondary" style="width:100%" onclick="goHome()">
+بازگشت
+</button>
 
 </div>
+
+</section>
+
+<section id="dashboard" class="panel hidden">
+
+<div class="box">
+
+<h2>داشبورد WebCraft 👋</h2>
+
+<p class="small" id="userEmail"></p>
+
+<button class="btn primary" onclick="showBuilder()">
++ ساخت پروژه جدید
+</button>
+
+<h3>پروژه‌های من</h3>
+
+<div id="projects" class="projects"></div>
+
 </div>
 
+</section>
+
+<section id="builder" class="panel hidden">
+
+<div class="box">
+
+<h2>ساخت سایت جدید 🚀</h2>
+
+<div class="editor">
+
+<div class="sidebar">
+
+<label>نام پروژه</label>
+<input id="projectName" placeholder="مثلاً سایت من">
+
+<label>عنوان سایت</label>
+<input id="siteTitle" value="سایت من">
+
+<label>متن سایت</label>
+<textarea id="siteText">به سایت من خوش آمدید!</textarea>
+
+<label>دکمه</label>
+<input id="buttonText" value="شروع کنید">
+
+<button class="btn primary" style="width:100%" onclick="updatePreview()">
+پیش‌نمایش
+</button>
+
+<br><br>
+
+<button class="btn primary" style="width:100%" onclick="saveProject()">
+💾 ذخیره پروژه
+</button>
+
+<br><br>
+
+<button class="btn secondary" style="width:100%" onclick="showDashboard()">
+بازگشت
+</button>
+
+</div>
+
+<div id="preview" class="preview">
+
+<h1>سایت من</h1>
+
+<p>به سایت من خوش آمدید!</p>
+
+<button>شروع کنید</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
 
 <script>
+/* =========================
+   SUPABASE
+========================= */
 
 const SUPABASE_URL =
 "https://mjsyvvyvxjgznzyqdrxd.supabase.co";
@@ -404,56 +380,106 @@ const SUPABASE_KEY =
 "sb_publishable_SCnOfoviLU0H7ECPyylu9A_6479fdKd";
 
 const supabaseClient =
-window.supabase.createClient(
+supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
 
+
+/* =========================
+   VARIABLES
+========================= */
+
 let authMode = "login";
-let currentProject = null;
 
 
-/* AUTH */
+/* =========================
+   PAGE FUNCTIONS
+========================= */
 
-function openAuth(mode="login"){
-authMode=mode;
-
-document.getElementById("authModal")
-.classList.add("active");
-
-updateAuthUI();
+function hideAll(){
+document.getElementById("home").classList.add("hidden");
+document.getElementById("auth").classList.add("hidden");
+document.getElementById("dashboard").classList.add("hidden");
+document.getElementById("builder").classList.add("hidden");
 }
 
-function closeAuth(){
-document.getElementById("authModal")
-.classList.remove("active");
-document.getElementById("authMsg").innerText="";
+function goHome(){
+hideAll();
+document.getElementById("home").classList.remove("hidden");
 }
 
-function switchAuth(){
-authMode=authMode==="login"?"signup":"login";
-updateAuthUI();
+function showAuth(){
+hideAll();
+document.getElementById("auth").classList.remove("hidden");
 }
 
-function updateAuthUI(){
+function showDashboard(){
+hideAll();
+document.getElementById("dashboard").classList.remove("hidden");
+loadProjects();
+}
+
+function showBuilder(){
+hideAll();
+document.getElementById("builder").classList.remove("hidden");
+}
+
+function toggleAuth(){
+
+authMode =
+authMode === "login"
+? "signup"
+: "login";
 
 document.getElementById("authTitle").innerText =
-authMode==="login"
-?"ورود به WebCraft"
-:"ساخت حساب WebCraft";
+authMode === "login"
+? "ورود به WebCraft"
+: "ساخت حساب WebCraft";
 
-document.getElementById("switchText").innerText =
-authMode==="login"
-?"حساب نداری؟"
-:"قبلاً حساب ساختی؟";
+document.querySelector("#auth .btn.primary").innerText =
+authMode === "login"
+? "ورود"
+: "ثبت‌نام";
 
-document.getElementById("switchButton").innerText =
-authMode==="login"
-?"ثبت‌نام"
-:"ورود";
+document.querySelector("#auth .btn.secondary").innerText =
+authMode === "login"
+? "ثبت‌نام"
+: "ورود";
+
+clearMessage();
 }
 
+
+/* =========================
+   MESSAGE
+========================= */
+
+function showMessage(text){
+
+const box =
+document.getElementById("authMessage");
+
+box.innerText = text;
+box.classList.remove("hidden");
+}
+
+function clearMessage(){
+
+document
+.getElementById("authMessage")
+.classList.add("hidden");
+
+}
+
+
+/* =========================
+   AUTH
+========================= */
+
 async function submitAuth(){
+
+clearMessage();
 
 const email =
 document.getElementById("email").value.trim();
@@ -461,433 +487,346 @@ document.getElementById("email").value.trim();
 const password =
 document.getElementById("password").value;
 
-const msg =
-document.getElementById("authMsg");
-
-msg.innerText="";
-
 if(!email || !password){
-msg.innerText="ایمیل و رمز عبور را وارد کن.";
+showMessage("ایمیل و رمز عبور را وارد کن.");
 return;
 }
 
-if(authMode==="signup"){
+if(authMode === "signup"){
 
-const {error}=await supabaseClient.auth.signUp({
-  email: email,
-  password: password,
-  options: {
-    emailRedirectTo: "https://kbehzad835-bit.github.io/WebCraft/"
-  }
-});
+const {data,error} =
+await supabaseClient.auth.signUp({
 
-if(error){
-msg.innerText=error.message;
-return;
-}
-
-msg.style.color="#7dffb2";
-msg.innerText=
-"حساب ساخته شد. اگر تأیید ایمیل فعال باشد، ایمیلت را بررسی کن.";
-
-}else{
-
-const {error}=await supabaseClient.auth.signInWithPassword({
 email:email,
-password:password
+
+password:password,
+
+options:{
+emailRedirectTo:
+"https://kbehzad835-bit.github.io/WebCraft/"
+}
+
 });
 
 if(error){
-msg.innerText=error.message;
+
+showMessage(error.message);
+return;
+
+}
+
+showMessage(
+"حساب ساخته شد! ایمیل تأیید برایت ارسال شد. بعد از تأیید، دوباره وارد WebCraft شو."
+);
+
 return;
 }
 
-closeAuth();
+
+/* LOGIN */
+
+const {data,error} =
+await supabaseClient.auth.signInWithPassword({
+
+email:email,
+
+password:password
+
+});
+
+if(error){
+
+showMessage(
+"ورود ناموفق بود: " + error.message
+);
+
+return;
 }
 
+afterLogin(data.user);
 }
 
 
-/* USER */
+/* =========================
+   LOGIN SUCCESS
+========================= */
 
-async function checkUser(){
+function afterLogin(user){
+
+document
+.getElementById("loginBtn")
+.classList.add("hidden");
+
+document
+.getElementById("dashboardBtn")
+.classList.remove("hidden");
+
+document
+.getElementById("logoutBtn")
+.classList.remove("hidden");
+
+document
+.getElementById("userEmail")
+.innerText =
+user.email;
+
+showDashboard();
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+async function logout(){
+
+await supabaseClient.auth.signOut();
+
+document
+.getElementById("loginBtn")
+.classList.remove("hidden");
+
+document
+.getElementById("dashboardBtn")
+.classList.add("hidden");
+
+document
+.getElementById("logoutBtn")
+.classList.add("hidden");
+
+goHome();
+}
+
+
+/* =========================
+   PROJECTS
+========================= */
+
+async function loadProjects(){
+
+const userResult =
+await supabaseClient.auth.getUser();
+
+const user =
+userResult.data.user;
+
+if(!user){
+showAuth();
+return;
+}
+
+document
+.getElementById("userEmail")
+.innerText =
+user.email;
+
+
+/*
+  جدول projects باید شامل این ستون‌ها باشد:
+
+  id
+  user_id
+  name
+  content
+  created_at
+*/
+
+const {data,error} =
+await supabaseClient
+.from("projects")
+.select("*")
+.eq("user_id",user.id)
+.order("created_at",{ascending:false});
+
+const container =
+document.getElementById("projects");
+
+container.innerHTML="";
+
+if(error){
+
+container.innerHTML =
+"<div class='message'>پروژه‌ها فعلاً قابل دریافت نیستند.</div>";
+
+return;
+}
+
+if(!data || data.length===0){
+
+container.innerHTML =
+"<div class='message'>هنوز پروژه‌ای نساختی.</div>";
+
+return;
+}
+
+data.forEach(project=>{
+
+const div =
+document.createElement("div");
+
+div.className="project";
+
+div.innerHTML = `
+<h3>${escapeHtml(project.name || "پروژه بدون نام")}</h3>
+<p class="small">پروژه ذخیره شده</p>
+`;
+
+container.appendChild(div);
+
+});
+
+}
+
+
+/* =========================
+   SAVE PROJECT
+========================= */
+
+async function saveProject(){
+
+const userResult =
+await supabaseClient.auth.getUser();
+
+const user =
+userResult.data.user;
+
+if(!user){
+
+showAuth();
+return;
+}
+
+const name =
+document
+.getElementById("projectName")
+.value
+.trim() || "پروژه جدید";
+
+const content =
+JSON.stringify({
+
+title:
+document.getElementById("siteTitle").value,
+
+text:
+document.getElementById("siteText").value,
+
+button:
+document.getElementById("buttonText").value
+
+});
+
+const {error} =
+await supabaseClient
+.from("projects")
+.insert({
+
+user_id:user.id,
+
+name:name,
+
+content:content
+
+});
+
+if(error){
+
+alert(
+"ذخیره نشد: " +
+error.message
+);
+
+return;
+}
+
+alert("پروژه با موفقیت ذخیره شد ✅");
+
+showDashboard();
+}
+
+
+/* =========================
+   PREVIEW
+========================= */
+
+function updatePreview(){
+
+const title =
+document.getElementById("siteTitle").value;
+
+const text =
+document.getElementById("siteText").value;
+
+const button =
+document.getElementById("buttonText").value;
+
+document
+.getElementById("preview")
+.innerHTML = `
+
+<h1>${escapeHtml(title)}</h1>
+
+<p>${escapeHtml(text)}</p>
+
+<button style="
+background:#7c5cff;
+color:white;
+border:0;
+padding:13px 25px;
+border-radius:10px;
+font-weight:bold;
+">
+${escapeHtml(button)}
+</button>
+
+`;
+
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHtml(text){
+
+return String(text)
+
+.replaceAll("&","&amp;")
+
+.replaceAll("<","&lt;")
+
+.replaceAll(">","&gt;")
+
+.replaceAll('"',"&quot;")
+
+.replaceAll("'","&#039;");
+
+}
+
+
+/* =========================
+   STARTUP
+========================= */
+
+async function startup(){
 
 const {data} =
 await supabaseClient.auth.getSession();
 
 if(data.session){
 
-showLoggedIn(data.session.user);
+afterLogin(data.session.user);
 
 }else{
-
-showLoggedOut();
-
-}
-
-}
-
-function showLoggedIn(user){
-
-document.getElementById("authButtons")
-.style.display="none";
-
-document.getElementById("userButtons")
-.style.display="block";
-
-document.getElementById("userEmail")
-.innerText=user.email;
-
-}
-
-function showLoggedOut(){
-
-document.getElementById("authButtons")
-.style.display="block";
-
-document.getElementById("userButtons")
-.style.display="none";
-}
-
-async function logout(){
-
-await supabaseClient.auth.signOut();
-
-document.getElementById("dashboard")
-.style.display="none";
-
-closeBuilder();
-
-showLoggedOut();
 
 goHome();
-}
-
-
-/* DASHBOARD */
-
-async function openDashboard(){
-
-const {data} =
-await supabaseClient.auth.getSession();
-
-if(!data.session){
-
-openAuth("login");
-return;
 
 }
 
-document.getElementById("dashboard")
-.style.display="block";
-
-document.getElementById("dashboard")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-await loadProjects();
 }
 
-async function loadProjects(){
-
-const {data,error} =
-await supabaseClient
-.from("projects")
-.select("*")
-.order("created_at",{ascending:false});
-
-const list =
-document.getElementById("projectsList");
-
-if(error){
-
-list.innerHTML=
-"<p>خطا در دریافت پروژه‌ها</p>";
-
-return;
-}
-
-if(!data.length){
-
-list.innerHTML=
-"<p style='color:#777'>هنوز پروژه‌ای نداری.</p>";
-
-return;
-}
-
-list.innerHTML="";
-
-data.forEach(project=>{
-
-const div=document.createElement("div");
-
-div.className="project";
-
-div.innerHTML=`
-<h3>${escapeHTML(project.name)}</h3>
-<small>پروژه WebCraft</small>
-
-<div class="project-actions">
-
-<button
-class="btn primary"
-onclick="editProject('${project.id}')">
-ویرایش
-</button>
-
-<button
-class="btn danger"
-onclick="deleteProject('${project.id}')">
-حذف
-</button>
-
-</div>
-`;
-
-list.appendChild(div);
-
-});
-
-}
-
-
-/* PROJECT */
-
-function newProject(){
-
-currentProject=null;
-
-document.getElementById("preview").innerHTML=`
-<h1>سایت من</h1>
-<p>اینجا صفحه سایت شماست.</p>
-<button class="btn primary">شروع کنید</button>
-`;
-
-openBuilder();
-}
-
-async function saveProject(){
-
-const {data} =
-await supabaseClient.auth.getSession();
-
-if(!data.session){
-
-openAuth("login");
-return;
-}
-
-const content =
-document.getElementById("preview").innerHTML;
-
-if(currentProject){
-
-const {error}=await supabaseClient
-.from("projects")
-.update({
-content:content
-})
-.eq("id",currentProject.id);
-
-if(error){
-alert(error.message);
-return;
-}
-
-}else{
-
-const {data:project,error}=
-await supabaseClient
-.from("projects")
-.insert({
-user_id:data.session.user.id,
-name:"پروژه جدید",
-content:content
-})
-.select()
-.single();
-
-if(error){
-alert(error.message);
-return;
-}
-
-currentProject=project;
-}
-
-alert("پروژه با موفقیت ذخیره شد.");
-
-await loadProjects();
-}
-
-async function editProject(id){
-
-const {data,error}=
-await supabaseClient
-.from("projects")
-.select("*")
-.eq("id",id)
-.single();
-
-if(error){
-alert(error.message);
-return;
-}
-
-currentProject=data;
-
-document.getElementById("preview")
-.innerHTML=data.content;
-
-openBuilder();
-}
-
-async function deleteProject(id){
-
-if(!confirm("این پروژه حذف شود؟"))
-return;
-
-const {error}=
-await supabaseClient
-.from("projects")
-.delete()
-.eq("id",id);
-
-if(error){
-alert(error.message);
-return;
-}
-
-await loadProjects();
-}
-
-
-/* BUILDER */
-
-function openBuilder(){
-
-document.getElementById("builder")
-.classList.add("active");
-
-document.getElementById("builder")
-.scrollIntoView({behavior:"smooth"});
-}
-
-function closeBuilder(){
-
-document.getElementById("builder")
-.classList.remove("active");
-}
-
-function startBuilding(){
-
-openDashboard();
-newProject();
-}
-
-function addTitle(){
-
-const el=document.createElement("h1");
-
-el.innerText="عنوان جدید";
-
-document.getElementById("preview")
-.appendChild(el);
-}
-
-function addText(){
-
-const el=document.createElement("p");
-
-el.innerText="متن جدید سایت";
-
-document.getElementById("preview")
-.appendChild(el);
-}
-
-function addButton(){
-
-const el=document.createElement("button");
-
-el.className="btn primary";
-
-el.innerText="دکمه جدید";
-
-document.getElementById("preview")
-.appendChild(el);
-}
-
-function addImage(){
-
-const url=prompt("لینک تصویر را وارد کن:");
-
-if(!url)return;
-
-const img=document.createElement("img");
-
-img.src=url;
-img.style.maxWidth="100%";
-img.style.maxHeight="250px";
-img.style.borderRadius="12px";
-
-document.getElementById("preview")
-.appendChild(img);
-}
-
-function clearPreview(){
-
-document.getElementById("preview").innerHTML=
-"<h1>سایت من</h1>";
-}
-
-
-/* NAVIGATION */
-
-function goHome(){
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-}
-
-function showFeatures(){
-
-document.getElementById("features")
-.scrollIntoView({
-behavior:"smooth"
-});
-}
-
-
-/* SECURITY */
-
-function escapeHTML(text){
-
-return String(text)
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
-}
-
-
-/* AUTH STATE */
-
-supabaseClient.auth.onAuthStateChange(
-(event,session)=>{
-
-if(session){
-showLoggedIn(session.user);
-}else{
-showLoggedOut();
-}
-
-});
-
-checkUser();
+startup();
 
 </script>
 
